@@ -1,3 +1,6 @@
+
+// TODO Remove this fn and use directy scene.add.. 
+// used only for wip scafolding definition 
 export function addText(config) {
   const {
     scene,
