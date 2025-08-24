@@ -3,7 +3,7 @@ import Player from "@/game-core/objects/player";
 
 const SCREEN_MARGIN = 16;
 
-export default class TestScene extends Phaser.Scene {
+export default class GameScene extends Phaser.Scene {
   constructor() {
     super("GameScene");
   }

@@ -19,6 +19,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   update() {
     const dir = new Phaser.Math.Vector2(0, 0);
+    let currentSpeed = this.speed;
 
     if (this.cursors.left.isDown) { 
       this.angle = -90;
@@ -36,25 +37,24 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       dir.y = 1 
     };
 
-    // Normaliza para evitar velocidad diagonal excesiva
+    if (this.cursors.shoot.isDown) {
+      this.shootBullet(dir);
+    }
+
+    if (this.cursors.turbo.isDown) {
+      currentSpeed = this.turboSpeed;
+    }
+
+    // avoid excessive diagonal velocity
     if (dir.length() > 0) {
       dir.normalize();
     }
 
-    // Turbo
-    const currentSpeed = this.cursors.turbo.isDown ? this.turboSpeed : this.speed;
-
-    // Aplica velocidad solo si hay dirección
     this.setVelocity(dir.x * currentSpeed, dir.y * currentSpeed);
 
-    // Disparo
-    if (this.cursors.shoot.isDown) {
-      this.shootBullet(dir);
-    }
   }
 
   shootBullet(direction) {
-    // Si no hay dirección, no dispara
     if (direction.length() === 0) {
       return
     };
