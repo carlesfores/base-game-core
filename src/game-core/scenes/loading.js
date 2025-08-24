@@ -17,9 +17,17 @@ export default class LoadingScene extends Phaser.Scene {
       text: 'Loading Scene', 
       origin: 0
     });
+
+    // TODO Create pre load scene
+
+    // Init game assets
   }
 
   create() {
+   // TODO Use Phaser timers if exist
 
+    setTimeout(() => {
+      this.scene.start('MenuScene');
+    }, 600);
   }
 }
