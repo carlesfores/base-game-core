@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import { addText } from "@/game-core/utils/index";
 
 export default class TestScene extends Phaser.Scene {
   constructor() {
@@ -7,41 +6,40 @@ export default class TestScene extends Phaser.Scene {
   }
 
   create() {
-    // TODO move to file for static data
-    const MARGIN = 16;
-    const x = MARGIN;
-    const y = MARGIN;
+    this.bgMusic = this.sound.add('menu', { loop: true, volume: 0.5 });
+    this.bgMusic.play();
+    
+    this.add.text(16, 16, 'v0.0.0');
 
-    addText({
-      scene: this, 
-      x, 
-      y, 
-      text: 'Menu Scene', 
-      origin: 0
+    // menu - start btn
+    this.startBtn = this.add.text(
+      this.scale.width / 2, 
+      this.scale.height / 2, 
+      'Start',
+      { fontSize: "20px" }
+    );
+
+    this.startBtn.alpha = 0.5;
+    this.startBtn.setOrigin(0.5);
+    this.startBtn.setInteractive();
+
+    this.startBtn.on('pointerover', () => {
+      this.startBtn.alpha = 1;
     });
 
-    this.start = addText({
-      scene: this, 
-      x: this.scale.width / 2, 
-      y: this.scale.height / 2, 
-      text: 'Start', 
-      origin: 0.5, 
-      style: { fontSize: "20px" },
+    this.startBtn.on('pointerout', () => {
+      this.startBtn.alpha = 0.5;
     });
 
-    this.start.setInteractive();
-    this.start.alpha = 0.5;
+    this.startBtn.on('pointerdown', () => {
+      this.bgMusic.stop();
 
-    this.start.on('pointerover', () => {
-      this.start.alpha = 1;
-    });
+      // wait 0.2s before start game scene (for harmony)
+      const startSceneCallback = () => {
+        this.scene.start('GameScene')
+      };
 
-    this.start.on('pointerout', () => {
-      this.start.alpha = 0.5;
-    });
-
-    this.start.on('pointerdown', () => {
-      // TODO Load game scene
+      this.time.delayedCall(200, startSceneCallback, {}, this); 
     });
   }
 }
