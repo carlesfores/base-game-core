@@ -12,7 +12,6 @@ onUnmounted(() => {
   game.value.destroy(true);
   game.value = null;
 });
-
 </script>
 
 <template>
@@ -20,5 +19,12 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-  
+#game-core-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
 </style>

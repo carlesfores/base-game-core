@@ -22,5 +22,4 @@ export default class LoadingScene extends Phaser.Scene {
   create() {
 
   }
-  
 }
