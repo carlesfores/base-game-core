@@ -54,7 +54,9 @@ npm run build
 
 ---
 
-<!-- ## Project Structure
+<!-- TODO: scafolding definition task
+
+## Project Structure
 
 A basic project structure could look like this:
 

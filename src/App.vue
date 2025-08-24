@@ -1,5 +1,7 @@
 <script setup>
-  
+import Phaser from 'phaser';
+
+console.log({Phaser});
 </script>
 
 <template>
