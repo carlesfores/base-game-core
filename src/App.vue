@@ -1,11 +1,22 @@
 <script setup>
-import Phaser from 'phaser';
+import {ref, onMounted, onUnmounted} from "vue";
+import InitGame from "./game-core/index";
 
-console.log({Phaser});
+const game = ref();
+
+onMounted(() => {
+  game.value = InitGame('game-core-container');
+});
+
+onUnmounted(() => {
+  game.value.destroy(true);
+  game.value = null;
+});
+
 </script>
 
 <template>
-  <div id="base-game-core-container"></div>
+  <div id="game-core-container"></div>
 </template>
 
 <style scoped>
