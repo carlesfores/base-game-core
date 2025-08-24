@@ -48,7 +48,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.setVelocity(dir.x * currentSpeed, dir.y * currentSpeed);
 
     // Disparo
-    if (Phaser.Input.Keyboard.JustDown(this.cursors.shoot)) {
+    if (this.cursors.shoot.isDown) {
       this.shootBullet(dir);
     }
   }
