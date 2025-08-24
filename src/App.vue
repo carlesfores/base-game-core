@@ -1,11 +1,16 @@
 <script setup>
 import {ref, onMounted, onUnmounted} from "vue";
+import { EventBus } from "./game-core/event-bus";
 import InitGame from "./game-core/index";
 
 const game = ref();
 
 onMounted(() => {
   game.value = InitGame('game-core-container');
+
+  EventBus.on('game-loaded', (scene) => {
+    console.log({scene});
+  });
 });
 
 onUnmounted(() => {

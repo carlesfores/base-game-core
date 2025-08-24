@@ -1,4 +1,5 @@
 import { addText } from "@/game-core/utils/index";
+import { EventBus } from "@/game-core/event-bus";
 
 export default class LoadingScene extends Phaser.Scene {
   constructor() {
@@ -6,6 +7,7 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   preload() {      
+    // TODO move to file for static data
     const MARGIN = 16;
     const x = MARGIN;
     const y = MARGIN;
@@ -27,6 +29,8 @@ export default class LoadingScene extends Phaser.Scene {
    // TODO Use Phaser timers if exist
 
     setTimeout(() => {
+      EventBus.emit('game-loaded', this);
+
       this.scene.start('MenuScene');
     }, 600);
   }

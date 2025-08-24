@@ -7,6 +7,7 @@ export default class TestScene extends Phaser.Scene {
   }
 
   create() {
+    // TODO move to file for static data
     const MARGIN = 16;
     const x = MARGIN;
     const y = MARGIN;
