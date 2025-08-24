@@ -33,13 +33,13 @@ export default class TestScene extends Phaser.Scene {
 
     this.startBtn.on('pointerdown', () => {
       this.bgMusic.stop();
-
+      this.cameras.main.fadeOut(200);
       // wait 0.2s before start game scene (for harmony)
       const startSceneCallback = () => {
         this.scene.start('GameScene')
       };
 
-      this.time.delayedCall(200, startSceneCallback, {}, this); 
+      this.time.delayedCall(200, startSceneCallback, [], this); 
     });
   }
 }
