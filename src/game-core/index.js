@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import LoadingScene from "./scenes/loading";
 import MenuScene from "./scenes/menu";
+import GameScene from "./scenes/game";
 
 const config = {
   type: Phaser.AUTO,
@@ -8,7 +9,7 @@ const config = {
   height: window.innerHeight,
   parent: 'game-content', 
   backgroundColor: '#000000',
-  scene: [LoadingScene, MenuScene],
+  scene: [LoadingScene, MenuScene, GameScene],
   scale: {
     // TODO update game objects positions (in scenes) on resize screen
     mode: Phaser.Scale.RESIZE,
