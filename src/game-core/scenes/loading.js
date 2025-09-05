@@ -5,26 +5,8 @@ export default class LoadingScene extends Phaser.Scene {
 
   preload() {      
     this.createLoadingItems();
-    this.setLoadingEvents();
     this.loadAudios();
     this.loadImages();
-  }
-
-  setLoadingEvents() {
-    this.load.on("progress", (value) => {
-      this.progressBar.clear();
-      this.progressBar.fillStyle(0XFFFFFF, 1);
-      this.progressBar.fillRect(
-        this.cameras.main.width / 4,
-        this.cameras.main.height / 2 - 16,
-        (this.cameras.main.width / 2) * value,
-        16
-      );
-    });
-
-    this.load.on("complete", () => {
-      this.scene.start('MenuScene');
-    });
   }
 
   loadAudios() {
@@ -33,19 +15,31 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   loadImages() {
-    this.load.image('bullet', 'assets/sprites/bullet.png');
     this.load.image('player', 'assets/sprites/player.png');
   }
 
   createLoadingItems() {
+    const { width, height } = this.scale;
+    const barWidth = width * 0.6; 
+    const barHeight = 8;         
+    const x = (width - barWidth) / 2;
+    const y = (height - barHeight) - 30 ;
+  
     this.loadBar = this.add.graphics();
-    this.loadBar.fillStyle(0x00FF00, 1);
-    this.loadBar.fillRect(
-      this.cameras.main.width / 4 - 2,
-      this.cameras.main.height / 2 - 18,
-      this.cameras.main.width / 2 + 4,
-      20
-    );
+    this.loadBar.fillStyle(0x444444, 1); 
+    this.loadBar.fillRect(x, y, barWidth, barHeight);
+  
     this.progressBar = this.add.graphics();
+  
+    this.load.on("progress", (value) => {
+      this.progressBar.clear();
+      this.progressBar.fillStyle(0xffffff, 1); 
+      this.progressBar.fillRect(x, y, barWidth * value, barHeight);
+    });
+  
+    this.load.on("complete", () => {
+      this.scene.start("MenuScene");
+    });
   }
+
 }

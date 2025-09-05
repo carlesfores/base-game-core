@@ -1,45 +1,44 @@
 import Phaser from "phaser";
+import { MENU_ITEMS, MENU_ITEMS_GAP } from "@/game-core/scenes/data/menu";
 
 export default class MenuScene extends Phaser.Scene {
   constructor() {
-    super("MenuScene");
+    super({ key: 'MenuScene' });
   }
 
   create() {
-    this.bgMusic = this.sound.add('menu', { loop: true, volume: 0.5 });
-    this.bgMusic.play();
-    
-    this.add.text(16, 16, 'v0.0.0');
+    this.createMenuItems();
+    this.input.keyboard.on("keydown-SPACE", () => this.startGameScene(), this);
+  }
 
-    // menu - start btn
-    this.startBtn = this.add.text(
-      this.scale.width / 2, 
-      this.scale.height / 2, 
-      'Start',
-      { fontSize: "20px" }
-    );
+  createMenuItems() {
+    const {width, height} = this.scale;
 
-    this.startBtn.alpha = 0.5;
-    this.startBtn.setOrigin(0.5);
-    this.startBtn.setInteractive();
+    for (const [index, item] of MENU_ITEMS.entries()) {
+      this[item.key] = this.add.text(width * 0.5, (height * 0.7) + index * MENU_ITEMS_GAP, item.label);
+      this[item.key].setOrigin(0.5).setInteractive();
+      this[item.key].alpha = 0.7;
 
-    this.startBtn.on('pointerover', () => {
-      this.startBtn.alpha = 1;
-    });
+      this[item.key].on('pointerover', () => this[item.key].alpha = 1);
+      this[item.key].on('pointerout', () => this[item.key].alpha = 0.5);
 
-    this.startBtn.on('pointerout', () => {
-      this.startBtn.alpha = 0.5;
-    });
+      if (item.action && typeof this[item.action] === 'function') {
+        this[item.key].on('pointerdown', () => this[item.action](item.key));
+      }
+    }
+  }
 
-    this.startBtn.on('pointerdown', () => {
-      this.bgMusic.stop();
-      this.cameras.main.fadeOut(200);
-      // wait 0.2s before start game scene (for harmony)
-      const startSceneCallback = () => {
-        this.scene.start('GameScene')
-      };
+  delayStartScene(callback) {
+    this.time.delayedCall(200, () => callback, null, this);
+  }
 
-      this.time.delayedCall(200, startSceneCallback, [], this); 
-    });
+  startGameScene() {
+    this.cameras.main.fadeOut(200);
+    this.delayStartScene(this.scene.start("MainGameScene"));
+  }
+
+  startOptionsScene() {
+    this.cameras.main.fadeOut(200);
+    this.delayStartScene(this.scene.start("MainGameScene"));
   }
 }
