@@ -2,65 +2,57 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
 
+    this.isJumping = false;
     scene.add.existing(this);
     scene.physics.add.existing(this);
+
+    this.setCollideWorldBounds(true);
+    this.setGravityY(900);
+    this.setBounce(0);
+    this.setDragX(800);
+    this.setMaxVelocity(400, 500);
+    this.setSize(26);
+  
+    this.cursors = scene.input.keyboard.createCursorKeys();
+    this.spaceKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     
-    this.speed = 300;
-    this.turboSpeed = 600;
-    this.cursors = scene.input.keyboard.addKeys({
-      up: 'W',
-      down: 'S',
-      left: 'A',
-      right: 'D',
-      shoot: 'SPACE',
-      turbo: 'SHIFT'
+    scene.anims.create({
+      key: 'idle',
+      frames: scene.anims.generateFrameNumbers('player', { start: 0, end: 0 }),
+      frameRate: 5,
+      repeat: -1
+    });
+  
+    scene.anims.create({
+      key: 'run',
+      frames: scene.anims.generateFrameNumbers('player', { start: 1, end: 4 }),
+      frameRate: 12,
+      repeat: -1
     });
   }
 
   update() {
-    const dir = new Phaser.Math.Vector2(0, 0);
-    let currentSpeed = this.speed;
-
-    if (this.cursors.left.isDown) { 
-      this.angle = -90;
-      dir.x = -1 
+    if (this.cursors.left.isDown) {
+      this.setVelocityX(-400);
+      this.setFlipX(true);
+      this.play('run', true);
     } else if (this.cursors.right.isDown) {
-      dir.x = 1;
-      this.angle = 90;
+      this.setVelocityX(400);
+      this.setFlipX(false);
+      this.play('run', true);
+    } else {
+      this.setVelocityX(0);
+      this.play('idle', true);
     }
 
-    if (this.cursors.up.isDown) { 
-      this.angle = 0;
-      dir.y = -1;
-     } else if (this.cursors.down.isDown) { 
-      this.angle = 180;
-      dir.y = 1 
-    };
-
-    if (this.cursors.shoot.isDown) {
-      this.shootBullet(dir);
+    if (Phaser.Input.Keyboard.JustDown(this.spaceKey) && this.body.onFloor()) {
+      this.setVelocityY(-349);
+      this.isJumping = true;
     }
 
-    if (this.cursors.turbo.isDown) {
-      currentSpeed = this.turboSpeed;
+    if (this.isJumping && this.body.velocity.y < 0 && this.spaceKey.isUp) {
+      this.setVelocityY(this.body.velocity.y / 2);
+      this.isJumping = false;
     }
-
-    // avoid excessive diagonal velocity
-    if (dir.length() > 0) {
-      dir.normalize();
-    }
-
-    this.setVelocity(dir.x * currentSpeed, dir.y * currentSpeed);
-
-  }
-
-  shootBullet(direction) {
-    if (direction.length() === 0) {
-      return
-    };
-
-    const bullet = this.scene.physics.add.sprite(this.x, this.y, 'bullet');
-    bullet.setVelocity(direction.x * 400, direction.y * 400);
-    bullet.setRotation(direction.angle());
   }
 }
