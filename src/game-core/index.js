@@ -1,26 +1,31 @@
 import Phaser from "phaser";
 import LoadingScene from "./scenes/loading";
 import MenuScene from "./scenes/menu";
-import GameScene from "./scenes/game";
+import MainGameScene from "./scenes/main-game";
 
 const config = {
   type: Phaser.AUTO,
-  width: window.innerWidth, 
-  height: window.innerHeight,
+  width: 640,
+  height: 480,
   parent: 'game-content', 
-  backgroundColor: '#000000',
-  scene: [LoadingScene, MenuScene, GameScene],
+  scene: [
+    LoadingScene, 
+    MenuScene, 
+    MainGameScene
+  ],
   scale: {
-    // TODO update game objects positions (in scenes) on resize screen
-    mode: Phaser.Scale.RESIZE,
+    mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH
   },
   physics: {
     default: 'arcade',
     arcade: {
+      debug: true,
       gravity: { y: 0 }
     }
-  }
+  },
+  pixelArt: true,
+  roundPixels: true 
 };
 
 const InitGame = (parent) => {
