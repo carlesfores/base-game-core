@@ -26,7 +26,7 @@ export default class MainGameScene extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, worldWidth, worldHeight);
     this.cameras.main.setBounds(0, 0, worldWidth, worldHeight);
 
-    this.bubble = this.add.text(0, 0, "", {
+    this.doorMessage = this.add.text(0, 0, "", {
       fontSize: "10px",
       backgroundColor: "#FF0000",
       color: "#000",
@@ -45,17 +45,12 @@ export default class MainGameScene extends Phaser.Scene {
       this.backgroundLayer
     );
 
-
-    const eventTiles = [
-      tile
-    ]
-
     if (tile && tile.properties.event === "door") {
-      this.bubble.setText("DOOR");
-      this.bubble.setPosition(tile.getCenterX(), tile.getCenterY() - 48);
-      this.bubble.setVisible(true);
+      this.doorMessage.setText("DOOR");
+      this.doorMessage.setPosition(tile.getCenterX(), tile.getCenterY() - 48);
+      this.doorMessage.setVisible(true);
     } else {
-      this.bubble.setVisible(false);
+      this.doorMessage.setVisible(false);
     }
 
   }
