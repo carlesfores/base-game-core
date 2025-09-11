@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import LoadingScene from "./scenes/loading";
 import MenuScene from "./scenes/menu";
-import MainGameScene from "./scenes/main-game";
+import GameScene from "./scenes/game";
 
 const config = {
   type: Phaser.AUTO,
@@ -11,7 +11,7 @@ const config = {
   scene: [
     LoadingScene, 
     MenuScene, 
-    MainGameScene
+    GameScene
   ],
   scale: {
     mode: Phaser.Scale.FIT,
@@ -20,7 +20,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true,
+      // debug: true,
       gravity: { y: 0 }
     }
   },

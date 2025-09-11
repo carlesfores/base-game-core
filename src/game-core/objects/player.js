@@ -1,6 +1,6 @@
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture) {
-    super(scene, x, y, texture);
+    super(scene, x, y, texture, 300);
 
     this.isJumping = false;
     scene.add.existing(this);
@@ -10,22 +10,30 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.setGravityY(900);
     this.setBounce(0);
     this.setDragX(800);
-    this.setMaxVelocity(400, 500);
-    this.setSize(26);
+    this.setMaxVelocity(600, 500);
+    
+    this.setTint(0xFF0000);
   
     this.cursors = scene.input.keyboard.createCursorKeys();
     this.spaceKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     
     scene.anims.create({
       key: 'idle',
-      frames: scene.anims.generateFrameNumbers('player', { start: 0, end: 0 }),
+      frames: scene.anims.generateFrameNumbers('OneBitTiles', { start: 300, end: 300 }),
       frameRate: 5,
       repeat: -1
     });
   
     scene.anims.create({
       key: 'run',
-      frames: scene.anims.generateFrameNumbers('player', { start: 1, end: 4 }),
+      frames: scene.anims.generateFrameNumbers('OneBitTiles', { start: 301, end: 303 }),
+      frameRate: 12,
+      repeat: -1
+    });
+
+    scene.anims.create({
+      key: 'jump',
+      frames: scene.anims.generateFrameNumbers('OneBitTiles', { start: 304, end: 304 }),
       frameRate: 12,
       repeat: -1
     });
@@ -33,11 +41,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   update() {
     if (this.cursors.left.isDown) {
-      this.setVelocityX(-400);
+      this.setVelocityX(-300);
       this.setFlipX(true);
       this.play('run', true);
     } else if (this.cursors.right.isDown) {
-      this.setVelocityX(400);
+      this.setVelocityX(300);
       this.setFlipX(false);
       this.play('run', true);
     } else {
@@ -46,7 +54,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (Phaser.Input.Keyboard.JustDown(this.spaceKey) && this.body.onFloor()) {
-      this.setVelocityY(-349);
+      this.play('jump', true);
+      this.setVelocityY(-300);
       this.isJumping = true;
     }
 

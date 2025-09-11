@@ -18,17 +18,24 @@ export default class LoadingScene extends Phaser.Scene {
 
   loadImages() {
     this.load.image("tiles", "assets/sprites/super-mario-nes-arrow-32px.png");
+    // this.load.image("OneBitTiles", "assets/sprites/1-bit-tileset.png");
   }
 
   loadSpritesheets() {
-    this.load.spritesheet('player', 'assets/sprites/player.png', {
-      frameWidth: 32,
-      frameHeight: 32
+    // this.load.spritesheet('player', 'assets/sprites/player.png', {
+    //   frameWidth: 32,
+    //   frameHeight: 32
+    // });
+
+    this.load.spritesheet('OneBitTiles', 'assets/sprites/1-bit-tileset.png', {
+      frameWidth: 16,
+      frameHeight: 16
     });
   }
 
   loadTileMaps() {
     this.load.tilemapTiledJSON("map", "assets/sprites/map.json");
+    this.load.tilemapTiledJSON("OneBitMap", "assets/sprites/1-bit-map.json");
   }
 
   createLoadingItems() {

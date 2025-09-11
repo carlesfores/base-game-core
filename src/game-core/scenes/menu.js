@@ -7,7 +7,7 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   create() {
-        this.createMenuItems();
+      this.createMenuItems();
     this.input.keyboard.on("keydown-SPACE", () => this.startGameScene(), this);
   }
 
@@ -35,7 +35,7 @@ export default class MenuScene extends Phaser.Scene {
   startGameScene() {
     try {
       this.cameras.main.fadeOut(200);
-      this.delayStartScene(this.scene.start("MainGameScene"));
+      this.delayStartScene(this.scene.start("GameScene"));
     } catch(erro) {
       console.warn(error);
     }
