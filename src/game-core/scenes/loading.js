@@ -12,8 +12,7 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   loadAudios() {
-    this.load.audio('menu', 'assets/sounds/menu.wav');
-    this.load.audio('game', 'assets/sounds/game.wav');
+    
   }
 
   loadImages() {
@@ -28,7 +27,6 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   loadTileMaps() {
-    this.load.tilemapTiledJSON("map", "assets/sprites/map.json");
     this.load.tilemapTiledJSON("OneBitMap", "assets/sprites/1-bit-map.json");
   }
 
